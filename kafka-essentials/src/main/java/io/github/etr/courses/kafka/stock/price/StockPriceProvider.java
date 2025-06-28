@@ -16,7 +16,7 @@ public class StockPriceProvider {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private static final String TOPIC_NAME = "stock.price.update";
 
-    @PutMapping("/{ticker}/price")
+    @PutMapping("/{ticker}")
     public ResponseEntity<Object> updateStockPrice(@PathVariable String ticker, @RequestParam String price) {
         log.info("Received request to update stock price for {}: {}", ticker, price);
         String messagePayload = ticker + ":" + price;

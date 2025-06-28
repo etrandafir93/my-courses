@@ -1,26 +1,23 @@
 package io.github.etr.courses.kafka.trend.analysis;
 
-import io.github.etr.courses.kafka.util.LogColors;
-import lombok.extern.slf4j.Slf4j;
+import static io.github.etr.courses.kafka.util.LogColors.green;
+
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
+
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
 public class TrendAnalyzer {
 
-    private static final String TOPIC_NAME = "stock.price.update";
+    private static final String STOCK_PRICE_UPDATE_TOPIC = "stock.price.update";
 
-    @KafkaListener(topics = TOPIC_NAME, groupId = "trend-analyzers")
+    @SneakyThrows
+    @KafkaListener(topics = STOCK_PRICE_UPDATE_TOPIC, groupId = "trend-analyzers")
     public void analyzeStockPriceUpdate(String message) {
-        log.info(LogColors.colorizeGreen("Received message in group '{}' from topic '{}': {}"), "trend-analyzers", TOPIC_NAME, message);
-        try {
-            // Simulate some processing delay
-            Thread.sleep(1000);
-            log.info(LogColors.colorizeGreen("Finished processing message: {}"), message);
-        } catch (InterruptedException e) {
-            log.error(LogColors.colorizeGreen("Error during simulated processing delay for message: {}"), message, e);
-            Thread.currentThread().interrupt(); // Restore interruption status
-        }
+        log.info(green("Received message stock price update message: " + message));
+        Thread.sleep(1000);
     }
 }

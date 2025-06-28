@@ -9,11 +9,11 @@ public class LogColors {
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_GREEN = "\u001B[32m";
 
-    public static String colorizeBlue(String message) {
+    public static String blue(String message) {
         return ANSI_BLUE + message + ANSI_RESET;
     }
 
-    public static String colorizeGreen(String message) {
+    public static String green(String message) {
         return ANSI_GREEN + message + ANSI_RESET;
     }
 }

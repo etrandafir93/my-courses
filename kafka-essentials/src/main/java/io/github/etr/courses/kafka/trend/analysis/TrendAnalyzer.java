@@ -20,4 +20,5 @@ public class TrendAnalyzer {
         log.info(green("Received message stock price update message: " + message));
         Thread.sleep(1000);
     }
+
 }

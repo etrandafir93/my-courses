@@ -6,7 +6,6 @@ import static java.util.stream.IntStream.range;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.IntStream;
 
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -26,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/stocks")
 @RequiredArgsConstructor
 public class StockPriceProvider {
+
     private static final String STOCK_PRICE_UPDATE_TOPIC = "stock.price.update";
 
     private final KafkaTemplate<String, String> kafkaTemplate;
@@ -33,15 +33,8 @@ public class StockPriceProvider {
     @PutMapping("/{ticker}")
     public ResponseEntity<Object> updateStockPrice(@PathVariable String ticker, @RequestParam String price) {
         log.info(blue("Received REST request to update stock price for {}: {}"), ticker, price);
-        try {
-            sendStockUpdate(ticker, price);
-            return ResponseEntity.ok()
-                .build();
-        } catch (Exception e) {
-            log.error(blue("Error processing REST request for ticker {}: {}"), ticker, e.getMessage());
-            return ResponseEntity.internalServerError()
-                .build();
-        }
+        sendStockUpdate(ticker, price);
+        return ResponseEntity.ok().build();
     }
 
     private void sendStockUpdate(String ticker, String price) {
@@ -68,7 +61,6 @@ public class StockPriceProvider {
     private static String randomPrice() {
         double randomPrice = ThreadLocalRandom.current()
             .nextDouble(140.00, 160.00);
-        String price = String.format("%.2f", randomPrice);
-        return price;
+        return String.format("%.2f", randomPrice);
     }
 }

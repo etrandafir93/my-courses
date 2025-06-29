@@ -15,7 +15,7 @@ public class TrendAnalyzer {
     private static final String STOCK_PRICE_UPDATE_TOPIC = "stock.price.update";
 
     @SneakyThrows
-    @KafkaListener(topics = STOCK_PRICE_UPDATE_TOPIC, groupId = "trend-analyzers")
+    @KafkaListener(topics = STOCK_PRICE_UPDATE_TOPIC, groupId = "trend-analyzers", concurrency = "4")
     public void analyzeStockPriceUpdate(String message) {
         log.info(green("Received message stock price update message: " + message));
         Thread.sleep(1000);

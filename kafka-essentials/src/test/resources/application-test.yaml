@@ -1,5 +1,5 @@
 topic:
-  stock-price-update: stock.price.update # Added from main application.yaml
+  stock-price-update: stock.price.update
 
 spring:
   kafka:
@@ -10,6 +10,6 @@ spring:
     consumer:
       properties:
         schema.registry.url: mock://testScope
-        specific.avro.reader: true # Ensure specific Avro records are used
+        specific.avro.reader: true
       value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
-      group-id: trend-analyzers # Consumer group id, can be same as main or different for tests
+      group-id: trend-analyzers

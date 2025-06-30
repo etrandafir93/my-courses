@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.kafka.StockPriceUpdate; // Renamed from StockEvent
+import com.example.kafka.StockPriceUpdate;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,7 @@ public class StockPriceProvider {
     @Value("${topic.stock-price-update}")
     private String stockPriceUpdateTopic;
 
-    private final KafkaTemplate<String, StockPriceUpdate> kafkaTemplate; // Renamed from StockEvent
+    private final KafkaTemplate<String, StockPriceUpdate> kafkaTemplate;
 
     @PutMapping("/{ticker}")
     public ResponseEntity<Object> updateStockPrice(@PathVariable String ticker, @RequestParam double price) {
@@ -46,10 +46,10 @@ public class StockPriceProvider {
     private void sendStockUpdate(String ticker, double price) {
         log.info(blue("Attempting to send stock update for {}: {}"), ticker, price);
 
-        StockPriceUpdate stockPriceUpdate = StockPriceUpdate.newBuilder() // Renamed from StockEvent
+        StockPriceUpdate stockPriceUpdate = StockPriceUpdate.newBuilder()
             .setTicker(ticker)
             .setPrice(price)
-            .setTimestamp(Instant.now()) // Pass Instant.now() directly
+            .setTimestamp(Instant.now())
             .build();
 
         kafkaTemplate.send(stockPriceUpdateTopic, ticker, stockPriceUpdate);
@@ -64,15 +64,14 @@ public class StockPriceProvider {
 
         range(0, 10).forEach(i ->
             tickers.forEach(ticker ->
-                sendStockUpdate(ticker, randomPrice()))); // randomPrice now returns double
+                sendStockUpdate(ticker, randomPrice())));
 
         log.info(blue("Finished sending initial stock prices. Total messages attempted: {}"), tickers.size() * 10);
     }
 
-    private static double randomPrice() { // Changed return type to double
+    private static double randomPrice() {
         double randomPrice = ThreadLocalRandom.current()
             .nextDouble(140.00, 160.00);
-        // Return a double rounded to 2 decimal places if needed, but direct double is fine for Avro
         return Math.round(randomPrice * 100.0) / 100.0;
     }
 }

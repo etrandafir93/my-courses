@@ -10,14 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.kafka.test.context.EmbeddedKafka;
-import org.springframework.test.context.TestPropertySource; // Added for overriding properties
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.RestClient;
-
-// Import for StockPriceUpdate will be automatically handled if Avro plugin generates it in the correct package
-// For now, assuming com.example.kafka.StockPriceUpdate will be the FQN
-// No direct import of StockPriceUpdate needed in this test file if not directly referenced.
-// However, if IntegrationTest were to, for example, send a StockPriceUpdate object directly via a test producer,
-// then an import for com.example.kafka.StockPriceUpdate would be needed.
 
 import io.github.etr.courses.kafka.trend.analysis.TrendAnalyzer;
 
@@ -28,7 +22,7 @@ import org.junit.jupiter.api.BeforeEach;
     partitions = 1,
     brokerProperties = { "listeners=PLAINTEXT://localhost:9092", "port=9092" }
 )
-// @TestPropertySource properties will be moved to src/test/resources/application.yaml
+@ActiveProfiles("test") // Activate the 'test' profile
 class IntegrationTest {
 
     @Autowired

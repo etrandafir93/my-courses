@@ -12,3 +12,5 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       group-id: learning-app-group
+    topic:
+      stock-price-update: stock.price.update

@@ -28,7 +28,7 @@ import org.springframework.beans.factory.annotation.Value;
 @RequiredArgsConstructor
 public class StockPriceProvider {
 
-    @Value("${kafka.topic.stock-price-update}")
+    @Value("${topic.stock-price-update}")
     private String stockPriceUpdateTopic;
 
     private final KafkaTemplate<String, String> kafkaTemplate;

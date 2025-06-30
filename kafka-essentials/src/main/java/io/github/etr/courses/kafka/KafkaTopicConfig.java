@@ -10,7 +10,7 @@ import org.springframework.kafka.config.TopicBuilder;
 @Configuration
 class KafkaTopicConfig {
 
-    @Value("${kafka.topic.stock-price-update}")
+    @Value("${topic.stock-price-update}")
     private String stockPriceUpdateTopic;
 
     @Bean

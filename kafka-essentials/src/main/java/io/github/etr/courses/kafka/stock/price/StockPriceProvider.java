@@ -6,6 +6,7 @@ import static java.util.stream.IntStream.range;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.time.Instant;
 
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.kafka.StockEvent; // Import the generated Avro record
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,21 +34,28 @@ public class StockPriceProvider {
     @Value("${topic.stock-price-update}")
     private String stockPriceUpdateTopic;
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    // Update KafkaTemplate to use StockEvent as value type
+    private final KafkaTemplate<String, StockEvent> kafkaTemplate;
 
     @PutMapping("/{ticker}")
-    public ResponseEntity<Object> updateStockPrice(@PathVariable String ticker, @RequestParam String price) {
+    public ResponseEntity<Object> updateStockPrice(@PathVariable String ticker, @RequestParam double price) { // Changed price to double
         log.info(blue("Received REST request to update stock price for {}: {}"), ticker, price);
         sendStockUpdate(ticker, price);
         return ResponseEntity.ok().build();
     }
 
-    private void sendStockUpdate(String ticker, String price) {
+    private void sendStockUpdate(String ticker, double price) { // Changed price to double
         log.info(blue("Attempting to send stock update for {}: {}"), ticker, price);
-        String messagePayload = ticker + ":" + price;
 
-        kafkaTemplate.send(stockPriceUpdateTopic, ticker, messagePayload);
-        log.info(blue("Message sent to Kafka topic '{}': Key='{}', Payload='{}'"), stockPriceUpdateTopic, ticker, messagePayload);
+        // Create StockEvent record
+        StockEvent stockEvent = StockEvent.newBuilder()
+            .setTicker(ticker)
+            .setPrice(price)
+            .setTimestamp(Instant.now().toEpochMilli())
+            .build();
+
+        kafkaTemplate.send(stockPriceUpdateTopic, ticker, stockEvent);
+        log.info(blue("Message sent to Kafka topic '{}': Key='{}', Payload='{}'"), stockPriceUpdateTopic, ticker, stockEvent);
     }
 
     @EventListener(ApplicationReadyEvent.class)
@@ -56,14 +66,15 @@ public class StockPriceProvider {
 
         range(0, 10).forEach(i ->
             tickers.forEach(ticker ->
-                sendStockUpdate(ticker, randomPrice())));
+                sendStockUpdate(ticker, randomPrice()))); // randomPrice now returns double
 
         log.info(blue("Finished sending initial stock prices. Total messages attempted: {}"), tickers.size() * 10);
     }
 
-    private static String randomPrice() {
+    private static double randomPrice() { // Changed return type to double
         double randomPrice = ThreadLocalRandom.current()
             .nextDouble(140.00, 160.00);
-        return String.format("%.2f", randomPrice);
+        // Return a double rounded to 2 decimal places if needed, but direct double is fine for Avro
+        return Math.round(randomPrice * 100.0) / 100.0;
     }
 }

@@ -9,8 +9,13 @@ spring:
     bootstrap-servers: localhost:9092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer # Changed to Avro serializer
+      properties:
+        schema.registry.url: http://localhost:8081 # Added schema registry URL
     consumer:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer # Changed to Avro deserializer
+      properties:
+        schema.registry.url: http://localhost:8081 # Added schema registry URL
+        specific.avro.reader: true # Added for specific Avro record deserialization
       group-id: learning-app-group

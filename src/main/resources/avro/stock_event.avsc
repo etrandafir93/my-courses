@@ -1,0 +1,10 @@
+{
+  "namespace": "com.example.kafka",
+  "type": "record",
+  "name": "StockEvent",
+  "fields": [
+    {"name": "ticker", "type": "string"},
+    {"name": "price", "type": "double"},
+    {"name": "timestamp", "type": {"type": "long", "logicalType": "timestamp-millis"}}
+  ]
+}

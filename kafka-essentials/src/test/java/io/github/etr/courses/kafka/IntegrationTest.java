@@ -8,27 +8,43 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.http.MediaType;
 import org.springframework.kafka.test.context.EmbeddedKafka;
+import org.springframework.web.client.RestClient;
 
 import io.github.etr.courses.kafka.trend.analysis.TrendAnalyzer;
+import org.junit.jupiter.api.BeforeEach;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @EmbeddedKafka
 class IntegrationTest {
 
     @Autowired
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private RestClient.Builder restClientBuilder;
+
+    private RestClient restClient;
 
     @Autowired
     private TrendAnalyzer trendAnalyzer;
 
+    @Value("${local.server.port}")
+    private int port;
+
     @Value("${topic.stock-price-update}")
     private String stockPriceUpdateTopic;
 
+    @BeforeEach
+    public void setUp() {
+        this.restClient = restClientBuilder.baseUrl("http://localhost:" + port).build();
+    }
+
     @Test
     void shouldSetInitialStockPrice() {
-        kafkaTemplate.send(stockPriceUpdateTopic, "AAPL", "AAPL:150.75");
+        restClient.put()
+            .uri("/api/stocks/AAPL?price=150.75")
+            .contentType(MediaType.APPLICATION_JSON)
+            .retrieve()
+            .toBodilessEntity();
 
         await().atMost(5, SECONDS)
             .untilAsserted(() ->
@@ -38,9 +54,21 @@ class IntegrationTest {
 
     @Test
     void shouldUpdateLatestStockPriceOnMessage() {
-        kafkaTemplate.send(stockPriceUpdateTopic, "GOOGL", "GOOGL:2500.5");
-        kafkaTemplate.send(stockPriceUpdateTopic, "GOOGL", "GOOGL:2560.1");
-        kafkaTemplate.send(stockPriceUpdateTopic, "GOOGL", "GOOGL:2550.0");
+        restClient.put()
+            .uri("/api/stocks/GOOGL?price=2500.5")
+            .contentType(MediaType.APPLICATION_JSON)
+            .retrieve()
+            .toBodilessEntity();
+        restClient.put()
+            .uri("/api/stocks/GOOGL?price=2560.1")
+            .contentType(MediaType.APPLICATION_JSON)
+            .retrieve()
+            .toBodilessEntity();
+        restClient.put()
+            .uri("/api/stocks/GOOGL?price=2550.0")
+            .contentType(MediaType.APPLICATION_JSON)
+            .retrieve()
+            .toBodilessEntity();
 
         await().atMost(5, SECONDS)
             .untilAsserted(() ->

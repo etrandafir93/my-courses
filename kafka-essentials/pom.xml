@@ -86,7 +86,7 @@
 							<sourceDirectory>${project.basedir}/../src/main/resources/avro/</sourceDirectory>
 							<outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
 							<imports>
-								<import>${project.basedir}/../src/main/resources/avro/stock_event.avsc</import>
+								<import>${project.basedir}/../src/main/resources/avro/stock_price_update.avsc</import>
 							</imports>
 						</configuration>
 					</execution>

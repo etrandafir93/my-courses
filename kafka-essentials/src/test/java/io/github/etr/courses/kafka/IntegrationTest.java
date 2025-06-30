@@ -13,35 +13,23 @@ import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.context.TestPropertySource; // Added for overriding properties
 import org.springframework.web.client.RestClient;
 
-import com.example.kafka.StockEvent; // Import the Avro record
-import io.confluent.kafka.schemaregistry.client.MockSchemaRegistryClient; // Added for mock schema registry
-import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig;
-import io.confluent.kafka.serializers.KafkaAvroSerializer;
+// Import for StockPriceUpdate will be automatically handled if Avro plugin generates it in the correct package
+// For now, assuming com.example.kafka.StockPriceUpdate will be the FQN
+// No direct import of StockPriceUpdate needed in this test file if not directly referenced.
+// However, if IntegrationTest were to, for example, send a StockPriceUpdate object directly via a test producer,
+// then an import for com.example.kafka.StockPriceUpdate would be needed.
+
 import io.github.etr.courses.kafka.trend.analysis.TrendAnalyzer;
 
-import org.junit.jupiter.api.BeforeAll; // Changed to BeforeAll for static setup
 import org.junit.jupiter.api.BeforeEach;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @EmbeddedKafka(
     partitions = 1,
-    brokerProperties = { "listeners=PLAINTEXT://localhost:9092", "port=9092" } // Standard Kafka properties
+    brokerProperties = { "listeners=PLAINTEXT://localhost:9092", "port=9092" }
 )
-// Override schema registry URL for tests to use a mock one
-@TestPropertySource(properties = {
-    "spring.kafka.producer.properties.schema.registry.url=mock://testScope",
-    "spring.kafka.consumer.properties.schema.registry.url=mock://testScope",
-    "spring.kafka.producer.value-serializer=io.confluent.kafka.serializers.KafkaAvroSerializer",
-    "spring.kafka.consumer.value-deserializer=io.confluent.kafka.serializers.KafkaAvroDeserializer",
-    "spring.kafka.consumer.properties.specific.avro.reader=true"
-})
+// @TestPropertySource properties will be moved to src/test/resources/application.yaml
 class IntegrationTest {
-
-    // This static client will be picked up by KafkaAvroSerializer/Deserializer
-    // when schema.registry.url is "mock://testScope"
-    // However, direct registration with the serializer config is more explicit if possible.
-    // For now, relying on the mock:// convention.
-    // Alternatively, could provide a @TestConfiguration with custom Producer/ConsumerFactory beans.
 
     @Autowired
     private RestClient.Builder restClientBuilder;

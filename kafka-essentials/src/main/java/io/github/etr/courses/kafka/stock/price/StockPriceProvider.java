@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.kafka.StockEvent; // Import the generated Avro record
+import com.example.kafka.StockPriceUpdate; // Renamed from StockEvent
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,28 +34,26 @@ public class StockPriceProvider {
     @Value("${topic.stock-price-update}")
     private String stockPriceUpdateTopic;
 
-    // Update KafkaTemplate to use StockEvent as value type
-    private final KafkaTemplate<String, StockEvent> kafkaTemplate;
+    private final KafkaTemplate<String, StockPriceUpdate> kafkaTemplate; // Renamed from StockEvent
 
     @PutMapping("/{ticker}")
-    public ResponseEntity<Object> updateStockPrice(@PathVariable String ticker, @RequestParam double price) { // Changed price to double
+    public ResponseEntity<Object> updateStockPrice(@PathVariable String ticker, @RequestParam double price) {
         log.info(blue("Received REST request to update stock price for {}: {}"), ticker, price);
         sendStockUpdate(ticker, price);
         return ResponseEntity.ok().build();
     }
 
-    private void sendStockUpdate(String ticker, double price) { // Changed price to double
+    private void sendStockUpdate(String ticker, double price) {
         log.info(blue("Attempting to send stock update for {}: {}"), ticker, price);
 
-        // Create StockEvent record
-        StockEvent stockEvent = StockEvent.newBuilder()
+        StockPriceUpdate stockPriceUpdate = StockPriceUpdate.newBuilder() // Renamed from StockEvent
             .setTicker(ticker)
             .setPrice(price)
-            .setTimestamp(Instant.now().toEpochMilli())
+            .setTimestamp(Instant.now()) // Pass Instant.now() directly
             .build();
 
-        kafkaTemplate.send(stockPriceUpdateTopic, ticker, stockEvent);
-        log.info(blue("Message sent to Kafka topic '{}': Key='{}', Payload='{}'"), stockPriceUpdateTopic, ticker, stockEvent);
+        kafkaTemplate.send(stockPriceUpdateTopic, ticker, stockPriceUpdate);
+        log.info(blue("Message sent to Kafka topic '{}': Key='{}', Payload='{}'"), stockPriceUpdateTopic, ticker, stockPriceUpdate);
     }
 
     @EventListener(ApplicationReadyEvent.class)

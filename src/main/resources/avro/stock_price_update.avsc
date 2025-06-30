@@ -1,7 +1,7 @@
 {
   "namespace": "com.example.kafka",
   "type": "record",
-  "name": "StockEvent",
+  "name": "StockPriceUpdate",
   "fields": [
     {"name": "ticker", "type": "string"},
     {"name": "price", "type": "double"},

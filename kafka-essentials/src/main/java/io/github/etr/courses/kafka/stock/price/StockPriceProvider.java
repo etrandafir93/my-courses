@@ -20,13 +20,16 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.beans.factory.annotation.Value;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/stocks")
 @RequiredArgsConstructor
 public class StockPriceProvider {
 
-    private static final String STOCK_PRICE_UPDATE_TOPIC = "stock.price.update";
+    @Value("${topic.stock-price-update}")
+    private String stockPriceUpdateTopic;
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
@@ -41,8 +44,8 @@ public class StockPriceProvider {
         log.info(blue("Attempting to send stock update for {}: {}"), ticker, price);
         String messagePayload = ticker + ":" + price;
 
-        kafkaTemplate.send(STOCK_PRICE_UPDATE_TOPIC, ticker, messagePayload);
-        log.info(blue("Message sent to Kafka topic '{}': Key='{}', Payload='{}'"), STOCK_PRICE_UPDATE_TOPIC, ticker, messagePayload);
+        kafkaTemplate.send(stockPriceUpdateTopic, ticker, messagePayload);
+        log.info(blue("Message sent to Kafka topic '{}': Key='{}', Payload='{}'"), stockPriceUpdateTopic, ticker, messagePayload);
     }
 
     @EventListener(ApplicationReadyEvent.class)

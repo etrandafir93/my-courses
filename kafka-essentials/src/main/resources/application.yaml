@@ -1,3 +1,5 @@
+topic:
+  stock-price-update: stock.price.update
 
 spring:
   application:

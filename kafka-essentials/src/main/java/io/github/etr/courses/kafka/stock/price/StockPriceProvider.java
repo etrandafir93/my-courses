@@ -3,6 +3,7 @@ package io.github.etr.courses.kafka.stock.price;
 import static io.github.etr.courses.kafka.util.LogColors.blue;
 import static java.util.stream.IntStream.range;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -18,8 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.github.etr.courses.kafka.stock.price.StockPriceUpdate; // Updated namespace
-
+import io.github.etr.courses.kafka.stock.price.avro.StockPriceUpdate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -53,7 +53,8 @@ public class StockPriceProvider {
             .build();
 
         kafkaTemplate.send(stockPriceUpdateTopic, ticker, stockPriceUpdate);
-        log.info(blue("Message sent to Kafka topic '{}': Key='{}', Payload='{}'"), stockPriceUpdateTopic, ticker, stockPriceUpdate);
+        log.info(blue("Message sent to Kafka topic '{}': Key='{}', Payload='{}'"),
+            stockPriceUpdateTopic, ticker, stockPriceUpdate);
     }
 
     @EventListener(ApplicationReadyEvent.class)
@@ -66,12 +67,15 @@ public class StockPriceProvider {
             tickers.forEach(ticker ->
                 sendStockUpdate(ticker, randomPrice())));
 
-        log.info(blue("Finished sending initial stock prices. Total messages attempted: {}"), tickers.size() * 10);
+        log.info(blue("Finished sending initial stock prices. Total messages attempted: {}"),
+            tickers.size() * 10);
     }
 
     private static double randomPrice() {
         double randomPrice = ThreadLocalRandom.current()
             .nextDouble(140.00, 160.00);
-        return Math.round(randomPrice * 100.0) / 100.0;
+        return BigDecimal.valueOf(randomPrice)
+            .setScale(2, BigDecimal.ROUND_HALF_UP)
+            .doubleValue();
     }
 }

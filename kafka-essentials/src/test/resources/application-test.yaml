@@ -1,6 +1,3 @@
-topic:
-  stock-price-update: stock.price.update
-
 spring:
   kafka:
     producer:

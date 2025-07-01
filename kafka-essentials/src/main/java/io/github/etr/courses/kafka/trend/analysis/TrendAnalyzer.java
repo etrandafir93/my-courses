@@ -1,6 +1,6 @@
 package io.github.etr.courses.kafka.trend.analysis;
 
-import static io.github.etr.courses.kafka.util.LogColors.*;
+import static io.github.etr.courses.kafka.util.LogColors.green;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -8,8 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import io.github.etr.courses.kafka.stock.price.StockPriceUpdate; // Updated namespace
-
+import io.github.etr.courses.kafka.stock.price.avro.StockPriceUpdate;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +21,12 @@ public class TrendAnalyzer {
     private final Map<String, Double> latestStockPrices = new ConcurrentHashMap<>();
 
     @SneakyThrows
-    @KafkaListener(topics = "${topic.stock-price-update}", groupId = "trend-analyzers", concurrency = "4")
-    public void analyzeStockPriceUpdate(StockPriceUpdate stockPriceUpdate) { // Renamed from StockEvent
-        log.info(green("Received stock price update message: {}"), stockPriceUpdate);
+    @KafkaListener(topics = "${topic.stock-price-update}", concurrency = "4")
+    public void analyzeStockPriceUpdate(StockPriceUpdate message) {
+        log.info(green("Received stock price update message: {}"), message);
 
-        String ticker = stockPriceUpdate.getTicker().toString();
-        double newPrice = stockPriceUpdate.getPrice();
+        String ticker = message.getTicker();
+        double newPrice = message.getPrice();
 
         Double oldPrice = latestStockPrices.get(ticker);
 
@@ -37,14 +36,14 @@ public class TrendAnalyzer {
             log.info(green("Stock {} trend: UP 📈 Old Price: {}, New Price: {}"),
                 ticker, oldPrice, newPrice);
         } else if (newPrice < oldPrice) {
-            log.info("Stock {} trend: DOWN 📉 Old Price: {}, New Price: {}",
+            log.info(green("Stock {} trend: DOWN 📉 Old Price: {}, New Price: {}"),
                 ticker, oldPrice, newPrice);
         } else {
-             log.info("Stock {} trend: NO CHANGE 😐 Price: {}",
+             log.info(green("Stock {} trend: NO CHANGE 😐 Price: {}"),
                 ticker, newPrice);
         }
 
-        Thread.sleep(1000);
+//        Thread.sleep(1000);
         latestStockPrices.put(ticker, newPrice);
     }
 

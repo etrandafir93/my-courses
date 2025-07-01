@@ -33,4 +33,4 @@ build/
 .vscode/
 
 # Avro generated classes
-src/main/java/io/github/etr/courses/kafka/stock/price/*.java
+src/main/java/io/github/etr/courses/kafka/stock/price/avro/*.java

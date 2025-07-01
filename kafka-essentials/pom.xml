@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.5.3</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 
 	<groupId>io.github.etr.courses</groupId>
@@ -31,7 +31,7 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.38</version>
-			<optional>true</optional> <!-- Consolidated to one, making it optional -->
+			<optional>true</optional>
 		</dependency>
 
 		<dependency>
@@ -53,9 +53,9 @@
 		<dependency>
 			<groupId>io.confluent</groupId>
 			<artifactId>kafka-avro-serializer</artifactId>
-			<version>7.5.3</version> <!-- Use a recent version -->
+			<version>7.5.3</version>
 		</dependency>
-		<dependency> <!-- Added for mock schema registry client -->
+		<dependency>
 			<groupId>io.confluent</groupId>
 			<artifactId>kafka-schema-registry-client</artifactId>
 			<version>7.5.3</version>
@@ -63,7 +63,7 @@
 		</dependency>
 	</dependencies>
 
-	<repositories> <!-- Added Confluent repository -->
+	<repositories>
 		<repository>
 			<id>confluent</id>
 			<url>https://packages.confluent.io/maven/</url>
@@ -88,12 +88,11 @@
 							<imports>
 								<import>${project.basedir}/src/main/resources/avro/stock_price_update.avsc</import>
 							</imports>
-                            <stringType>String</stringType> <!-- Ensure Java String is used for Avro strings -->
+                            <stringType>String</stringType>
                             <enableDecimalLogicalType>true</enableDecimalLogicalType>
                             <customConversions>
                                 <conversion>org.apache.avro.data.TimeConversions$TimestampMillisConversion</conversion>
                             </customConversions>
-                            <!-- JodaTimeConversions factory removed as java.time is preferred and standard -->
 						</configuration>
 					</execution>
 				</executions>

@@ -83,11 +83,17 @@
 							<goal>schema</goal>
 						</goals>
 						<configuration>
-							<sourceDirectory>${project.basedir}/../src/main/resources/avro/</sourceDirectory>
+							<sourceDirectory>${project.basedir}/src/main/resources/avro/</sourceDirectory>
 							<outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
 							<imports>
-								<import>${project.basedir}/../src/main/resources/avro/stock_price_update.avsc</import>
+								<import>${project.basedir}/src/main/resources/avro/stock_price_update.avsc</import>
 							</imports>
+                            <stringType>String</stringType> <!-- Ensure Java String is used for Avro strings -->
+                            <enableDecimalLogicalType>true</enableDecimalLogicalType>
+                            <customConversions>
+                                <conversion>org.apache.avro.data.TimeConversions$TimestampMillisConversion</conversion>
+                            </customConversions>
+                            <!-- JodaTimeConversions factory removed as java.time is preferred and standard -->
 						</configuration>
 					</execution>
 				</executions>

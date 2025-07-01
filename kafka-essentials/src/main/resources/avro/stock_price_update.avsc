@@ -1,5 +1,5 @@
 {
-  "namespace": "com.example.kafka",
+  "namespace": "io.github.etr.courses.kafka.stock.price",
   "type": "record",
   "name": "StockPriceUpdate",
   "fields": [

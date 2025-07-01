@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package com.example.kafka;
+package io.github.etr.courses.kafka.stock.price;
 
 import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
@@ -14,10 +14,10 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class StockPriceUpdate extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 3725441352201127411L;
+  private static final long serialVersionUID = -3888546212011010201L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"StockPriceUpdate\",\"namespace\":\"com.example.kafka\",\"fields\":[{\"name\":\"ticker\",\"type\":\"string\"},{\"name\":\"price\",\"type\":\"double\"},{\"name\":\"timestamp\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"StockPriceUpdate\",\"namespace\":\"io.github.etr.courses.kafka.stock.price\",\"fields\":[{\"name\":\"ticker\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"price\",\"type\":\"double\"},{\"name\":\"timestamp\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -76,7 +76,7 @@ public class StockPriceUpdate extends org.apache.avro.specific.SpecificRecordBas
     return DECODER.decode(b);
   }
 
-  private java.lang.CharSequence ticker;
+  private java.lang.String ticker;
   private double price;
   private java.time.Instant timestamp;
 
@@ -93,7 +93,7 @@ public class StockPriceUpdate extends org.apache.avro.specific.SpecificRecordBas
    * @param price The new value for price
    * @param timestamp The new value for timestamp
    */
-  public StockPriceUpdate(java.lang.CharSequence ticker, java.lang.Double price, java.time.Instant timestamp) {
+  public StockPriceUpdate(java.lang.String ticker, java.lang.Double price, java.time.Instant timestamp) {
     this.ticker = ticker;
     this.price = price;
     this.timestamp = timestamp.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
@@ -134,7 +134,7 @@ public class StockPriceUpdate extends org.apache.avro.specific.SpecificRecordBas
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: ticker = (java.lang.CharSequence)value$; break;
+    case 0: ticker = value$ != null ? value$.toString() : null; break;
     case 1: price = (java.lang.Double)value$; break;
     case 2: timestamp = (java.time.Instant)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
@@ -145,7 +145,7 @@ public class StockPriceUpdate extends org.apache.avro.specific.SpecificRecordBas
    * Gets the value of the 'ticker' field.
    * @return The value of the 'ticker' field.
    */
-  public java.lang.CharSequence getTicker() {
+  public java.lang.String getTicker() {
     return ticker;
   }
 
@@ -154,7 +154,7 @@ public class StockPriceUpdate extends org.apache.avro.specific.SpecificRecordBas
    * Sets the value of the 'ticker' field.
    * @param value the value to set.
    */
-  public void setTicker(java.lang.CharSequence value) {
+  public void setTicker(java.lang.String value) {
     this.ticker = value;
   }
 
@@ -196,8 +196,8 @@ public class StockPriceUpdate extends org.apache.avro.specific.SpecificRecordBas
    * Creates a new StockPriceUpdate RecordBuilder.
    * @return A new StockPriceUpdate RecordBuilder
    */
-  public static com.example.kafka.StockPriceUpdate.Builder newBuilder() {
-    return new com.example.kafka.StockPriceUpdate.Builder();
+  public static io.github.etr.courses.kafka.stock.price.StockPriceUpdate.Builder newBuilder() {
+    return new io.github.etr.courses.kafka.stock.price.StockPriceUpdate.Builder();
   }
 
   /**
@@ -205,11 +205,11 @@ public class StockPriceUpdate extends org.apache.avro.specific.SpecificRecordBas
    * @param other The existing builder to copy.
    * @return A new StockPriceUpdate RecordBuilder
    */
-  public static com.example.kafka.StockPriceUpdate.Builder newBuilder(com.example.kafka.StockPriceUpdate.Builder other) {
+  public static io.github.etr.courses.kafka.stock.price.StockPriceUpdate.Builder newBuilder(io.github.etr.courses.kafka.stock.price.StockPriceUpdate.Builder other) {
     if (other == null) {
-      return new com.example.kafka.StockPriceUpdate.Builder();
+      return new io.github.etr.courses.kafka.stock.price.StockPriceUpdate.Builder();
     } else {
-      return new com.example.kafka.StockPriceUpdate.Builder(other);
+      return new io.github.etr.courses.kafka.stock.price.StockPriceUpdate.Builder(other);
     }
   }
 
@@ -218,11 +218,11 @@ public class StockPriceUpdate extends org.apache.avro.specific.SpecificRecordBas
    * @param other The existing instance to copy.
    * @return A new StockPriceUpdate RecordBuilder
    */
-  public static com.example.kafka.StockPriceUpdate.Builder newBuilder(com.example.kafka.StockPriceUpdate other) {
+  public static io.github.etr.courses.kafka.stock.price.StockPriceUpdate.Builder newBuilder(io.github.etr.courses.kafka.stock.price.StockPriceUpdate other) {
     if (other == null) {
-      return new com.example.kafka.StockPriceUpdate.Builder();
+      return new io.github.etr.courses.kafka.stock.price.StockPriceUpdate.Builder();
     } else {
-      return new com.example.kafka.StockPriceUpdate.Builder(other);
+      return new io.github.etr.courses.kafka.stock.price.StockPriceUpdate.Builder(other);
     }
   }
 
@@ -233,7 +233,7 @@ public class StockPriceUpdate extends org.apache.avro.specific.SpecificRecordBas
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<StockPriceUpdate>
     implements org.apache.avro.data.RecordBuilder<StockPriceUpdate> {
 
-    private java.lang.CharSequence ticker;
+    private java.lang.String ticker;
     private double price;
     private java.time.Instant timestamp;
 
@@ -246,7 +246,7 @@ public class StockPriceUpdate extends org.apache.avro.specific.SpecificRecordBas
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(com.example.kafka.StockPriceUpdate.Builder other) {
+    private Builder(io.github.etr.courses.kafka.stock.price.StockPriceUpdate.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.ticker)) {
         this.ticker = data().deepCopy(fields()[0].schema(), other.ticker);
@@ -266,7 +266,7 @@ public class StockPriceUpdate extends org.apache.avro.specific.SpecificRecordBas
      * Creates a Builder by copying an existing StockPriceUpdate instance
      * @param other The existing instance to copy.
      */
-    private Builder(com.example.kafka.StockPriceUpdate other) {
+    private Builder(io.github.etr.courses.kafka.stock.price.StockPriceUpdate other) {
       super(SCHEMA$, MODEL$);
       if (isValidValue(fields()[0], other.ticker)) {
         this.ticker = data().deepCopy(fields()[0].schema(), other.ticker);
@@ -286,7 +286,7 @@ public class StockPriceUpdate extends org.apache.avro.specific.SpecificRecordBas
       * Gets the value of the 'ticker' field.
       * @return The value.
       */
-    public java.lang.CharSequence getTicker() {
+    public java.lang.String getTicker() {
       return ticker;
     }
 
@@ -296,7 +296,7 @@ public class StockPriceUpdate extends org.apache.avro.specific.SpecificRecordBas
       * @param value The value of 'ticker'.
       * @return This builder.
       */
-    public com.example.kafka.StockPriceUpdate.Builder setTicker(java.lang.CharSequence value) {
+    public io.github.etr.courses.kafka.stock.price.StockPriceUpdate.Builder setTicker(java.lang.String value) {
       validate(fields()[0], value);
       this.ticker = value;
       fieldSetFlags()[0] = true;
@@ -316,7 +316,7 @@ public class StockPriceUpdate extends org.apache.avro.specific.SpecificRecordBas
       * Clears the value of the 'ticker' field.
       * @return This builder.
       */
-    public com.example.kafka.StockPriceUpdate.Builder clearTicker() {
+    public io.github.etr.courses.kafka.stock.price.StockPriceUpdate.Builder clearTicker() {
       ticker = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -336,7 +336,7 @@ public class StockPriceUpdate extends org.apache.avro.specific.SpecificRecordBas
       * @param value The value of 'price'.
       * @return This builder.
       */
-    public com.example.kafka.StockPriceUpdate.Builder setPrice(double value) {
+    public io.github.etr.courses.kafka.stock.price.StockPriceUpdate.Builder setPrice(double value) {
       validate(fields()[1], value);
       this.price = value;
       fieldSetFlags()[1] = true;
@@ -356,7 +356,7 @@ public class StockPriceUpdate extends org.apache.avro.specific.SpecificRecordBas
       * Clears the value of the 'price' field.
       * @return This builder.
       */
-    public com.example.kafka.StockPriceUpdate.Builder clearPrice() {
+    public io.github.etr.courses.kafka.stock.price.StockPriceUpdate.Builder clearPrice() {
       fieldSetFlags()[1] = false;
       return this;
     }
@@ -375,7 +375,7 @@ public class StockPriceUpdate extends org.apache.avro.specific.SpecificRecordBas
       * @param value The value of 'timestamp'.
       * @return This builder.
       */
-    public com.example.kafka.StockPriceUpdate.Builder setTimestamp(java.time.Instant value) {
+    public io.github.etr.courses.kafka.stock.price.StockPriceUpdate.Builder setTimestamp(java.time.Instant value) {
       validate(fields()[2], value);
       this.timestamp = value.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
       fieldSetFlags()[2] = true;
@@ -395,7 +395,7 @@ public class StockPriceUpdate extends org.apache.avro.specific.SpecificRecordBas
       * Clears the value of the 'timestamp' field.
       * @return This builder.
       */
-    public com.example.kafka.StockPriceUpdate.Builder clearTimestamp() {
+    public io.github.etr.courses.kafka.stock.price.StockPriceUpdate.Builder clearTimestamp() {
       fieldSetFlags()[2] = false;
       return this;
     }
@@ -405,7 +405,7 @@ public class StockPriceUpdate extends org.apache.avro.specific.SpecificRecordBas
     public StockPriceUpdate build() {
       try {
         StockPriceUpdate record = new StockPriceUpdate();
-        record.ticker = fieldSetFlags()[0] ? this.ticker : (java.lang.CharSequence) defaultValue(fields()[0]);
+        record.ticker = fieldSetFlags()[0] ? this.ticker : (java.lang.String) defaultValue(fields()[0]);
         record.price = fieldSetFlags()[1] ? this.price : (java.lang.Double) defaultValue(fields()[1]);
         record.timestamp = fieldSetFlags()[2] ? this.timestamp : (java.time.Instant) defaultValue(fields()[2]);
         return record;

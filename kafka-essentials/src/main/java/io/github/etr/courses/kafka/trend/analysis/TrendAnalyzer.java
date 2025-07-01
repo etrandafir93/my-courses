@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import com.example.kafka.StockPriceUpdate;
+import io.github.etr.courses.kafka.stock.price.StockPriceUpdate; // Updated namespace
 
 import lombok.Getter;
 import lombok.SneakyThrows;

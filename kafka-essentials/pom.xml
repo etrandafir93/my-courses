@@ -85,9 +85,9 @@
 						<configuration>
 							<sourceDirectory>${project.basedir}/src/main/resources/avro/</sourceDirectory>
 							<outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
-							<imports>
-								<import>${project.basedir}/src/main/resources/avro/**</import>
-							</imports>
+							<includes>
+								<include>**/*.avsc</include>
+							</includes>
                             <stringType>String</stringType>
                             <enableDecimalLogicalType>true</enableDecimalLogicalType>
                             <customConversions>

@@ -3,10 +3,8 @@ spring:
     producer:
       properties:
         schema.registry.url: mock://testScope
-      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
     consumer:
+      group-id: trend-analyzers
       properties:
         schema.registry.url: mock://testScope
         specific.avro.reader: true
-      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
-      group-id: trend-analyzers

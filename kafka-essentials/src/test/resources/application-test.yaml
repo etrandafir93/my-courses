@@ -4,7 +4,6 @@ spring:
       properties:
         schema.registry.url: mock://testScope
     consumer:
-      group-id: trend-analyzers
       properties:
         schema.registry.url: mock://testScope
         specific.avro.reader: true

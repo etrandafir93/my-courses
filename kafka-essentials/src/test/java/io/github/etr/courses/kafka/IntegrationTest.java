@@ -4,6 +4,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,8 +16,6 @@ import org.springframework.web.client.RestClient;
 
 import io.github.etr.courses.kafka.trend.analysis.TrendAnalyzer;
 
-import org.junit.jupiter.api.BeforeEach;
-
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @EmbeddedKafka
 @ActiveProfiles("test")
@@ -26,9 +25,6 @@ class IntegrationTest {
 
     @Value("${local.server.port}")
     private int port;
-
-    @Value("${topic.stock-price-update}")
-    private String stockPriceUpdateTopic;
 
     @Autowired
     private TrendAnalyzer trendAnalyzer;

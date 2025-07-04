@@ -2,19 +2,27 @@
 
 In this section, we will modify our Spring Boot application to produce messages to a Kafka topic.
 
-Checkout [branch]((https://github.com/etrandafir93/my-courses/tree/kafka-essentials/start)) 
-`kafka-essentials/start`: our codebase is in the initial state,
+To get started, checkout the tag `0-start`:
+```git
+git checkout 0-start
+```
+
+### Lesson Goal
+
+Our codebase is in the initial state,
 where our two components are not yet connected via Kafka:
 
-![Initial State](./img/0-initial-state.png)
-
+![Lesson Start](./img/1-1-produce-msg-start.png)
 
 The goal of section 1.1. is to enable _StockPriceProvider_ to produce messages to a Kafka topic
 whenever it receives a price update via HTTP:
 
-![Initial State](./img/1-1-produce-kafka-msg.png)
+![Lesson End](./img/1-1-produce-msg-end.png)
 
-You can find all the changes and the final version of the code [here](https://github.com/etrandafir93/my-courses/commit/a004c43ca2aca2adb4e63a368926c04ae2700b5f).
+Try to follow along!
+
+If you get stuck, you can find all the changes
+and the final version of the code [here](https://github.com/etrandafir93/my-courses/commit/a004c43ca2aca2adb4e63a368926c04ae2700b5f).
 
 For other questions or additional support, feel free to [reach out](https://www.linkedin.com/in/emanueltrandafir/).
 
@@ -101,6 +109,9 @@ To do so, simply open Kafka UI at [localhost:8085](http://localhost:8085),
 and navigate to the `stock.price.update` topic.
 Then, if we select the _Messages_ tab, we should see the message we just sent from the CLI:
 
-![Kafka UI Messages](./img/1-1-test.png)
+![Kafka UI Messages](./img/1-1-kafka-ui.png)
 
+### Next Steps?
 
+In the [next lesson](1-2-consume-messages.md) we'll learn 
+how to consume these messages using Spring's _@KafkaListener_ annotation.

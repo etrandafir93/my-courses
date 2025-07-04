@@ -10,9 +10,9 @@
 	</parent>
 
 	<groupId>io.github.etr.courses</groupId>
-	<artifactId>kafka-app</artifactId>
+	<artifactId>kafka-essentials-final</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>kafka-app</name>
+	<name>kafka-essentials-final</name>
 
 	<properties>
 		<java.version>21</java.version>

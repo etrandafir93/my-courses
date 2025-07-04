@@ -1,9 +1,0 @@
-spring:
-  kafka:
-    producer:
-      properties:
-        schema.registry.url: mock://testScope
-    consumer:
-      properties:
-        schema.registry.url: mock://testScope
-        specific.avro.reader: true

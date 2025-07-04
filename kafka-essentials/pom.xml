@@ -10,25 +10,18 @@
 	</parent>
 
 	<groupId>io.github.etr.courses</groupId>
-	<artifactId>kafka-app</artifactId>
+	<artifactId>kafka-essentials</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>kafka-app</name>
+	<name>kafka-essentials-start</name>
 
 	<properties>
 		<java.version>21</java.version>
-		<kafka-avro-serializer.version>8.0.0</kafka-avro-serializer.version>
-		<kafka-schema-registry-client.version>8.0.0</kafka-schema-registry-client.version>
-		<avro-maven-plugin.version>1.11.3</avro-maven-plugin.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.kafka</groupId>
-			<artifactId>spring-kafka</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -42,60 +35,10 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.kafka</groupId>
-			<artifactId>spring-kafka-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.awaitility</groupId>
-			<artifactId>awaitility</artifactId>
-			<version>4.2.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.confluent</groupId>
-			<artifactId>kafka-avro-serializer</artifactId>
-			<version>${kafka-avro-serializer.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.confluent</groupId>
-			<artifactId>kafka-schema-registry-client</artifactId>
-			<version>${kafka-schema-registry-client.version}</version>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
-
-	<repositories>
-		<repository>
-			<id>confluent</id>
-			<url>https://packages.confluent.io/maven/</url>
-		</repository>
-	</repositories>
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.avro</groupId>
-				<artifactId>avro-maven-plugin</artifactId>
-				<version>${avro-maven-plugin.version}</version>
-				<executions>
-					<execution>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>schema</goal>
-						</goals>
-						<configuration>
-							<sourceDirectory>${project.basedir}/src/main/resources/avro/</sourceDirectory>
-							<outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
-							<includes>
-								<include>**/*.avsc</include>
-							</includes>
-							<stringType>String</stringType>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

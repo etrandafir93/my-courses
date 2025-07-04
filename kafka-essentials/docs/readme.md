@@ -29,5 +29,6 @@ to the stream of stock price updates coming from `stock.price`, using Kafka.
 
 ## 1. Producing and Consuming Messages
 
-- [1.1. Producing Kafka Messages](1-1-produce-messages.md)
+- [1. Producing Kafka Messages](1-1-produce-messages.md)
+- [2. Consuming Kafka Messages](1-2-consume-messages.md)
 

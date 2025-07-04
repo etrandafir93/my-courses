@@ -12,25 +12,22 @@ and using Kafka partitions for concurrent processing.
 We'll work on a financial markets application that analyzes price trends for various stocks. 
 The project is organized into two main packages:
 
-- [stock.price](./src/main/java/io/github/etr/courses/kafka/stock/price): 
+- [stock.price](../src/main/java/io/github/etr/courses/kafka/stock/price): 
 This package detects stock price changes and produces messages to a Kafka topic 
 called `stock.price.updates`. 
 It also provides a PUT endpoint for sending stock price updates via HTTP, 
 which is useful for demos and testing.
 
 
-- [trend.analysis](./src/main/java/io/github/etr/courses/kafka/trend/analysis): 
+- [trend.analysis](../src/main/java/io/github/etr/courses/kafka/trend/analysis): 
 This package analyzes stock price updates to detect trends. 
 It keeps track of the latest price for each stock in memory.
 
 As we build this application, we'll connect the `trend.analysis` package 
 to the stream of stock price updates coming from `stock.price`, using Kafka.
 
+
 ## 1. Producing and Consuming Messages
 
-For the first part of this tutorial, we'll focus on producing and consuming simple text messages.
-Checkout the `kafka-essentials/start` branch to see the initial setup. 
+- [1.1. Producing Kafka Messages](1-1-produce-messages.md)
 
-### 1.1. Producing Kafka Messages
-
-Firstly, we'll need to 

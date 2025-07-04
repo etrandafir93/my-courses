@@ -6,6 +6,7 @@ import static java.lang.Double.parseDouble;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 import lombok.Getter;
@@ -18,7 +19,7 @@ public class TrendAnalyzer {
     @Getter
     private final Map<String, Double> latestStockPrices = new ConcurrentHashMap<>();
 
-    // TODO
+    @KafkaListener(topics = "${topic.stock-price-update}")
     public void analyzeStockPriceUpdate(String message) {
         // assume message format "ticker:newPrice" eg: "AAPL:150.25"
         log.info(green("Received stock price update message: {}"), message);

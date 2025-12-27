@@ -111,6 +111,11 @@ Then, if we select the _Messages_ tab, we should see the message we just sent fr
 
 ![Kafka UI Messages](./img/1-1-kafka-ui.png)
 
+In other words, our Kafka producer is working correctly!
+Let's update our diagram to reflect this:
+
+![kafka-producer-end](./img/1-1-produce-msg-end.png)
+
 ### Next Steps?
 
 In the [next lesson](1-2-consume-messages.md) we'll learn 
